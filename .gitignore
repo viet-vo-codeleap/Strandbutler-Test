@@ -58,3 +58,13 @@ pids
 
 # Diagnostic reports (https://nodejs.org/api/report.html)
 report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
+
+# Load test output
+load-tests/results/*.json
+load-tests/results/*.html
+load-tests/results/*.xml
+load-tests/results/*.csv
+load-tests/results/*.txt
+load-tests/results/*.log
+load-tests/results/*.md
+load-tests/results/*.png
