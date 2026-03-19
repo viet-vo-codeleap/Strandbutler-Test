@@ -15,8 +15,8 @@ config:
   plugins:
     expect: {}
   phases:
-    - duration: 600       # 10 minutes
-      arrivalRate: 1      # 1 new user/sec = ~1 RPS (≈2× k6's 0.5 RPS — see note above)
+    - duration: 60       # 10 minutes
+      arrivalRate: 1000      # 1 new user/sec = ~1 RPS (≈2× k6's 0.5 RPS — see note above)
       name: "Load test"
   ensure:
     # Artillery v2 ensure syntax — uses full metric path

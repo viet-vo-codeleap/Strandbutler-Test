@@ -7,7 +7,7 @@ import { check, sleep } from 'k6';
 import { BASE_URL, DEFAULT_THRESHOLDS } from './utils/config.js';
 
 export const options = {
-  vus: 5,
+  vus: 500,
   duration: '30s',
   thresholds: DEFAULT_THRESHOLDS,
 };

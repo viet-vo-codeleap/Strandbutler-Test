@@ -10,23 +10,23 @@
 config:
   target: "http://108.130.216.13:3000"
   phases:
-    - duration: 12
+    - duration: 120
       arrivalRate: 1
       rampTo: 5
       name: "Ramp to 5 RPS"
-    - duration: 12
+    - duration: 120
       arrivalRate: 5
       rampTo: 10
       name: "Ramp to 10 RPS"
-    - duration: 12
+    - duration: 120
       arrivalRate: 10
       rampTo: 20
       name: "Ramp to 20 RPS"
-    - duration: 12
+    - duration: 120
       arrivalRate: 20
       rampTo: 30
       name: "Push to 30 RPS"
-    - duration: 18
+    - duration: 180
       arrivalRate: 1
       name: "Recovery cooldown (Phase D) — minimum rate, observe error rate dropping to 0"
 

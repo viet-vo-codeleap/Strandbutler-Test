@@ -4,6 +4,7 @@
 
 export const BASE_URL = __ENV.BASE_URL || 'http://108.130.216.13:3000';
 
+
 export const DEFAULT_THRESHOLDS = {
   // 95% of requests must complete within 500ms
   http_req_duration: ['p(95)<500'],
