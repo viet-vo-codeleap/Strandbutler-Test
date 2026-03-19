@@ -1,17 +1,22 @@
 // load-tests/k6/stress-test.js
-// Phase C + D: Stress test - ramp RPS from 1 to 30, then observe recovery.
-
+// Stress test: gradually ramp RPS to find the system's breaking point.
+//
+// What this simulates:
+//   Organic traffic growth — load increases steadily until something breaks.
+//   After the peak, traffic drops and we observe how fast the system recovers.
+//
 // Stage breakdown:
-// 0:00 -> 2:00 ramp up to 5 RPS
-// 2:00 -> 4:00 ramp up to 10 RPS
-// 4:00 -> 6:00 ramp up to 20 RPS
-// 6:00 -> 8:00 ramp up to 30 RPS (this is likely the break point locally)
-// 8:00 -> 11:00 ramp down to 0 RPS - observe recovery (Phase D)
-
-// Key metrics to watch:
-//  - At which RPS does http_req_failed first exceed 1%? -> breaking point
-//  - At which RPS does p95 latency exceed 500ms? -> degradation point
-//  - How long after ramp-down does error rate return to 0%? -> recovery time
+//   0:00 ->  2:00   1  -> 10 RPS   (warm up)
+//   2:00 ->  4:00   10 -> 30 RPS   (moderate load)
+//   4:00 ->  6:00   30 -> 60 RPS   (high load)
+//   6:00 ->  8:00   60 -> 100 RPS  (near-limit push)
+//   8:00 -> 11:00  100 ->  0 RPS   (recovery — Phase D)
+//
+// Key questions to answer after the run:
+//   1. At which RPS did http_req_failed first exceed 1%?   -> breaking point
+//   2. At which RPS did p95 first exceed 500ms?            -> degradation point
+//   3. How long after ramp-down did error rate return to 0%? -> recovery time
+//   4. Did ECS RunningTaskCount increase? How fast?
 
 import http from 'k6/http';
 import { check } from 'k6';
@@ -23,21 +28,20 @@ export const options = {
       executor: 'ramping-arrival-rate',
       startRate: 1,
       timeUnit: '1s',
-      preAllocatedVUs: 50,
-      maxVUs: 200,
+      preAllocatedVUs: 100,
+      maxVUs: 500,
       stages: [
-        { target: 5, duration: '2m' },
-        { target: 10, duration: '2m' },
-        { target: 20, duration: '2m' },
-        { target: 30, duration: '2m' },
-        { target: 0, duration: '3m' },
+        { target: 10,  duration: '2m' },  // warm up
+        { target: 30,  duration: '2m' },  // moderate load
+        { target: 60,  duration: '2m' },  // high load
+        { target: 100, duration: '2m' },  // near-limit push
+        { target: 0,   duration: '3m' },  // recovery
       ],
     },
   },
-  // No hard thresholds here - the point is to find the breaking point,
-  // not to pass/fail. We record everything and interpret manually.
+  // No hard pass/fail — goal is to find where things break, not to pass a threshold.
   thresholds: {
-    http_req_duration: ['p(95)<2000'], // soft limit - we expect to exceed this
+    http_req_duration: ['p(95)<3000'],  // soft ceiling — expect to exceed at high RPS
   },
 };
 
@@ -47,4 +51,4 @@ export default function () {
   check(res, {
     'status is 200': (r) => r.status === 200,
   });
-};
+}
