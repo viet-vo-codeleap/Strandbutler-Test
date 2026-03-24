@@ -68,3 +68,4 @@ load-tests/results/*.txt
 load-tests/results/*.log
 load-tests/results/*.md
 load-tests/results/*.png
+docs/tickets/*

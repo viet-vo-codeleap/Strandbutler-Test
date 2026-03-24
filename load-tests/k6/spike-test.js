@@ -48,10 +48,10 @@ export const options = {
       preAllocatedVUs: 200,
       maxVUs: 1000,
       stages: [
-        { target: 5,   duration: '1m' },   // warm up at baseline
+        { target: 5,   duration: '20s' },   // warm up at baseline
         { target: 500, duration: '5s' },   // sudden burst — 5 second spike
-        { target: 500, duration: '3m' },   // sustain peak load
-        { target: 5,   duration: '2m' },   // ramp down, observe recovery
+        { target: 1000, duration: '5m' },   // sustain peak load
+        { target: 5,   duration: '30s' },   // ramp down, observe recovery
       ],
     },
   },

@@ -42,9 +42,9 @@ export const options = {
       preAllocatedVUs: 200,
       maxVUs: 1000,
       stages: [
-        { target: 500, duration: '20s' },   // ramp up to peak load
-        { target: 500, duration: '80s' },   // hold — let ECS scale out and stabilise
-        { target: 0,   duration: '40s' },   // ramp down — observe scale-in and ALB drain
+        { target: 100, duration: '5m' },   // ramp up to peak load
+        { target: 500, duration: '10m' },   // hold — let ECS scale out and stabilise
+        { target: 0,   duration: '5m' },   // ramp down — observe scale-in and ALB drain
       ],
     },
   },

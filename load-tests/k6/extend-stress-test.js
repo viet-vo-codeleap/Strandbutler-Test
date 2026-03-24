@@ -43,8 +43,8 @@ export const options = {
       preAllocatedVUs: 100,
       maxVUs: 500,
       stages: [
-        { target: 10,  duration: '4m' },  // warm up
-        { target: 50,  duration: '4m' },  // moderate load
+        { target: 50,  duration: '4m' },  // warm up
+        { target: 70,  duration: '4m' },  // moderate load
         { target: 100, duration: '4m' },  // high load — scale-out should trigger
         { target: 200, duration: '4m' },  // new territory
         { target: 300, duration: '4m' },  // find the break

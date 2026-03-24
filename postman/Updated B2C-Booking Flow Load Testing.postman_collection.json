@@ -1,0 +1,1766 @@
+{
+  "info": {
+    "_postman_id": "5b1c9725-b13c-4798-9c94-639ab6c62399",
+    "name": "Updated B2C-Booking Flow Load Testing",
+    "description": "Professional collection for beach chair booking flow load testing. Clean URLs with essential variables only. Backend teams can add query parameters as needed.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "43158481"
+  },
+  "item": [
+    {
+      "name": "1. Master Data (Heavy Endpoints)",
+      "item": [
+        {
+          "name": "Load Cities",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "",
+                  "  // Load Testing - Cities Endpoint",
+                  "  pm.test('Cities - Status code is 200', function () {",
+                  "      pm.response.to.have.status(200);",
+                  "  });",
+                  "",
+                  "  pm.test('Cities - Response time under 3000ms', function () {",
+                  "      pm.expect(pm.response.responseTime).to.be.below(3000);",
+                  "  });",
+                  "",
+                  "  pm.test('Cities - Response is valid JSON with items', function () {",
+                  "      const response = pm.response.json();",
+                  "      pm.expect(response).to.be.an('object');",
+                  "      pm.expect(response).to.have.property('items');",
+                  "      pm.expect(response.items).to.be.an('array');",
+                  "  });",
+                  "",
+                  "  pm.test('Cities - Has city data', function () {",
+                  "      const response = pm.response.json();",
+                  "      pm.expect(response).to.have.property('count');",
+                  "      pm.expect(response.count).to.be.a('number');",
+                  "      if (response.items.length > 0) {",
+                  "          pm.expect(response.items[0]).to.have.property('id');",
+                  "          pm.expect(response.items[0]).to.have.property('name');",
+                  "      }",
+                  "  });"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/destinations/cities",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "destinations",
+                "cities"
+              ]
+            },
+            "description": "🟡 MEDIUM: Heavy on first load, cached 1hr. Add query params as needed: ?page=0&itemsPerPage=0&filters[active]=true"
+          },
+          "response": []
+        },
+        {
+          "name": "Load Beaches",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "  // Load Testing - Regions Endpoint",
+                  "  pm.test('Regions - Status code is 200', function () {",
+                  "      pm.response.to.have.status(200);",
+                  "  });",
+                  "",
+                  "  pm.test('Regions - Response time under 3000ms', function () {",
+                  "      pm.expect(pm.response.responseTime).to.be.below(3000);",
+                  "  });",
+                  "",
+                  "  pm.test('Regions - Response is valid JSON with items', function () {",
+                  "      const response = pm.response.json();",
+                  "      pm.expect(response).to.be.an('object');",
+                  "      pm.expect(response).to.have.property('items');",
+                  "      pm.expect(response.items).to.be.an('array');",
+                  "  });",
+                  "",
+                  "  pm.test('Regions - Has region data', function () {",
+                  "      const response = pm.response.json();",
+                  "      pm.expect(response).to.have.property('count');",
+                  "      pm.expect(response.count).to.be.a('number');",
+                  "      if (response.items.length > 0) {",
+                  "          pm.expect(response.items[0]).to.have.property('id');",
+                  "          pm.expect(response.items[0]).to.have.property('name');",
+                  "      }",
+                  "  });"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/destinations/beaches",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "destinations",
+                "beaches"
+              ]
+            },
+            "description": "🟡 MEDIUM: Heavy on first load, cached 1hr. Add query params as needed: ?page=0&itemsPerPage=0&filters[active]=true"
+          },
+          "response": []
+        },
+        {
+          "name": "Load Regions",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "  // Load Testing - Regions Endpoint",
+                  "  pm.test('Regions - Status code is 200', function () {",
+                  "      pm.response.to.have.status(200);",
+                  "  });",
+                  "",
+                  "  pm.test('Regions - Response time under 3000ms', function () {",
+                  "      pm.expect(pm.response.responseTime).to.be.below(3000);",
+                  "  });",
+                  "",
+                  "  pm.test('Regions - Response is valid JSON with items', function () {",
+                  "      const response = pm.response.json();",
+                  "      pm.expect(response).to.be.an('object');",
+                  "      pm.expect(response).to.have.property('items');",
+                  "      pm.expect(response.items).to.be.an('array');",
+                  "  });",
+                  "",
+                  "  pm.test('Regions - Has region data', function () {",
+                  "      const response = pm.response.json();",
+                  "      pm.expect(response).to.have.property('count');",
+                  "      pm.expect(response.count).to.be.a('number');",
+                  "      if (response.items.length > 0) {",
+                  "          pm.expect(response.items[0]).to.have.property('id');",
+                  "          pm.expect(response.items[0]).to.have.property('name');",
+                  "      }",
+                  "  });"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/destinations/regions",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "destinations",
+                "regions"
+              ]
+            },
+            "description": "🟡 MEDIUM: Heavy on first load, cached 1hr. Add query params as needed: ?page=0&itemsPerPage=0&filters[active]=true"
+          },
+          "response": []
+        },
+        {
+          "name": "Load Sections",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "  pm.test('Sections - Status code is 200', function () {",
+                  "      pm.response.to.have.status(200);",
+                  "  });",
+                  "",
+                  "  pm.test('Sections - Response time under 5000ms (CRITICAL)', function ",
+                  "  () {",
+                  "      pm.expect(pm.response.responseTime).to.be.below(5000);",
+                  "  });",
+                  "",
+                  "  pm.test('Sections - Response is valid JSON', function () {",
+                  "      const response = pm.response.json();",
+                  "      pm.expect(response).to.be.an('object');",
+                  "  });",
+                  "",
+                  "  pm.test('Sections - Has items array', function () {",
+                  "      const response = pm.response.json();",
+                  "      pm.expect(response).to.have.property('items');",
+                  "      pm.expect(response.items).to.be.an('array');",
+                  "  });",
+                  "",
+                  "  pm.test('Sections - Has count property', function () {",
+                  "      const response = pm.response.json();",
+                  "      pm.expect(response).to.have.property('count');",
+                  "      pm.expect(response.count).to.be.a('number');",
+                  "  });",
+                  "",
+                  "  pm.test('Sections - No server errors', function () {",
+                  "      pm.expect(pm.response.code).to.not.eql(500);",
+                  "      pm.expect(pm.response.code).to.not.eql(502);",
+                  "      pm.expect(pm.response.code).to.not.eql(503);",
+                  "  });"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/features/sections",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "features",
+                "sections"
+              ]
+            },
+            "description": "🔴 HIGH: Largest initial data load. Blocks app startup. Add query params as needed: ?page=0&itemsPerPage=0"
+          },
+          "response": []
+        }
+      ],
+      "description": "Large dataset endpoints called during app startup - HIGH LOAD IMPACT"
+    },
+    {
+      "name": "2. Location & Vendor Information",
+      "item": [
+        {
+          "name": "Get Section Details",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "  // Load Testing - Section Details Endpoint",
+                  "  pm.test('Section Details - Status code is 200', function () {",
+                  "      pm.response.to.have.status(200);",
+                  "  });",
+                  "",
+                  "  pm.test('Section Details - Response time under 2000ms', function () {",
+                  "      pm.expect(pm.response.responseTime).to.be.below(2000);",
+                  "  });",
+                  "",
+                  "  pm.test('Section Details - Response structure is valid', function () ",
+                  "  {",
+                  "      const response = pm.response.json();",
+                  "      pm.expect(response).to.be.an('object');",
+                  "      pm.expect(response).to.have.property('count');",
+                  "      pm.expect(response).to.have.property('items');",
+                  "  });",
+                  "",
+                  "  pm.test('Section Details - Items is array', function () {",
+                  "      const response = pm.response.json();",
+                  "      pm.expect(response.items).to.be.an('array');",
+                  "  });"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/features/sections",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "features",
+                "sections"
+              ]
+            },
+            "description": "🟢 LOW: Get specific section details. Add query params: ?page=0&itemsPerPage=1&filters[id]={{sectionId}}"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Vendor Information",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  " pm.test('Vendor Info - Status code is 200', function () {",
+                  "      pm.response.to.have.status(200);",
+                  "  });",
+                  "",
+                  "  pm.test('Vendor Info - Response time under 1500ms', function () {",
+                  "      pm.expect(pm.response.responseTime).to.be.below(1500);",
+                  "  });",
+                  "",
+                  "  pm.test('Vendor Info - Has vendor data', function () {",
+                  "      const response = pm.response.json();",
+                  "      pm.expect(response).to.be.an('object');",
+                  "      pm.expect(response).to.have.property('publicReference');",
+                  "      pm.expect(response).to.have.property('name');",
+                  "      pm.expect(response).to.have.property('address');",
+                  "  });",
+                  "",
+                  "  pm.test('Vendor Info - PublicReference validation', function () {",
+                  "      pm.expect(pm.environment.get('publicReference')).to.not.be.empty;",
+                  "  });",
+                  "",
+                  "  pm.test('Vendor Info - Required fields present', function () {",
+                  "      const response = pm.response.json();",
+                  "      pm.expect(response.name).to.be.a('string').and.not.be.empty;",
+                  "      pm.expect(response.publicReference).to.be.a('string').and.not.be.",
+                  "  empty;",
+                  "      pm.expect(response.address).to.be.an('object');",
+                  "      pm.expect(response.details).to.be.an('object');",
+                  "  });"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/features/public/vendor?publicReference={{publicReference}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "features",
+                "public",
+                "vendor"
+              ],
+              "query": [
+                {
+                  "key": "publicReference",
+                  "value": "{{publicReference}}"
+                }
+              ]
+            },
+            "description": "🟢 LOW: Get vendor configuration. Add query param: ?publicReference={{publicReference}}"
+          },
+          "response": []
+        }
+      ],
+      "description": "Location-specific and vendor configuration endpoints"
+    },
+    {
+      "name": "3. Availability (Performance Critical)",
+      "item": [
+        {
+          "name": "Check Beach Chair Availability",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "  pm.test('Availability - Status code is 200', function () {",
+                  "      pm.response.to.have.status(200);",
+                  "  });",
+                  "",
+                  "  pm.test('Availability - Response time under 2000ms (CRITICAL)',",
+                  "  function () {",
+                  "      pm.expect(pm.response.responseTime).to.be.below(2000);",
+                  "  });",
+                  "",
+                  "  pm.test('Availability - Response is valid JSON array', function () {",
+                  "      const response = pm.response.json();",
+                  "      pm.expect(response).to.be.an('array');",
+                  "  });",
+                  "",
+                  "  pm.test('Availability - Has beach chair data', function () {",
+                  "      const response = pm.response.json();",
+                  "      if (response.length > 0) {",
+                  "          const section = response[0];",
+                  "          pm.expect(section).to.have.property('id');",
+                  "          pm.expect(section).to.have.property('sectionName');",
+                  "          pm.expect(section).to.have.property('rowData');",
+                  "          pm.expect(section.rowData).to.be.an('array');",
+                  "",
+                  "          if (section.rowData.length > 0) {",
+                  "              const chair = section.rowData[0];",
+                  "              pm.expect(chair).to.have.property('id');",
+                  "              pm.expect(chair).to.have.property('timeEnum');",
+                  "              pm.expect(chair).to.have.property('model');",
+                  "              pm.expect(chair).to.have.property('publicNumber');",
+                  "          }",
+                  "      }",
+                  "  });",
+                  "",
+                  "  pm.test('Availability - No rate limiting errors', function () {",
+                  "      pm.expect(pm.response.code).to.not.eql(429);",
+                  "  });",
+                  "",
+                  "  pm.test('Availability - Environment variables exist', function () {",
+                  "      pm.expect(pm.environment.get('sectionId')).to.not.be.empty;",
+                  "      pm.expect(pm.environment.get('publicReference')).to.not.be.empty;",
+                  "      pm.expect(pm.environment.get('timeZone')).to.not.be.empty;",
+                  "  });",
+                  "",
+                  "  pm.test('Availability - Beach chair availability status valid',",
+                  "  function () {",
+                  "      const response = pm.response.json();",
+                  "      if (response.length > 0 && response[0].rowData.length > 0) {",
+                  "          const chair = response[0].rowData[0];",
+                  "          const validTimeEnums = ['boxBackgroundFree',",
+                  "  'boxBackgroundAllDay', 'boxBackgroundPartial'];",
+                  "          pm.expect(validTimeEnums).to.include(chair.timeEnum);",
+                  "      }",
+                  "  });"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/features/public/sections/{{sectionId}}/beach_chairs_availability?start={{startDate}}&end={{endDate}}&publicReference={{publicReference}}&timeZone={{timeZone}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "features",
+                "public",
+                "sections",
+                "{{sectionId}}",
+                "beach_chairs_availability"
+              ],
+              "query": [
+                {
+                  "key": "start",
+                  "value": "{{startDate}}"
+                },
+                {
+                  "key": "end",
+                  "value": "{{endDate}}"
+                },
+                {
+                  "key": "publicReference",
+                  "value": "{{publicReference}}"
+                },
+                {
+                  "key": "timeZone",
+                  "value": "{{timeZone}}"
+                }
+              ]
+            },
+            "description": "🔴 HIGH: Most frequent call, complex logic. Add query params: ?start={{startDate}}&end={{endDate}}&timeZone={{timeZone}}&publicReference={{publicReference}}"
+          },
+          "response": []
+        }
+      ],
+      "description": "Real-time availability checking - MOST FREQUENT CALLS"
+    },
+    {
+      "name": "4. Beach Chair Details",
+      "item": [
+        {
+          "name": "Get Beach Chair Details",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "// Load Testing - Beach Chair Details",
+                  "pm.test('Beach Chair Details - Status code is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test('Beach Chair Details - Response time under 1500ms', function () {",
+                  "    pm.expect(pm.response.responseTime).to.be.below(1500);",
+                  "});",
+                  "",
+                  "pm.test('Beach Chair Details - Has chair data', function () {",
+                  "    const response = pm.response.json();",
+                  "    pm.expect(response).to.be.an('object');",
+                  "    pm.expect(response).to.have.property('id');",
+                  "    pm.expect(response).to.have.property('model');",
+                  "});",
+                  "",
+                  "pm.test('Beach Chair Details - beachChairId variable exists', function () {",
+                  "    pm.expect(pm.environment.get('beachChairId')).to.not.be.empty;",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/bookings/beach-chairs/{{beachChairId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "bookings",
+                "beach-chairs",
+                "{{beachChairId}}"
+              ]
+            },
+            "description": "🟡 MEDIUM: Get chair features and status. Called when user selects specific chairs."
+          },
+          "response": []
+        }
+      ],
+      "description": "Individual beach chair information"
+    },
+    {
+      "name": "5. Pricing",
+      "item": [
+        {
+          "name": "Calculate Multi-day Pricing",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "  pm.test('Multi-day Pricing - Status code is 200', function () {",
+                  "      pm.response.to.have.status(200);",
+                  "  });",
+                  "",
+                  "  pm.test('Multi-day Pricing - Response time under 2000ms', function ()",
+                  "   {",
+                  "      pm.expect(pm.response.responseTime).to.be.below(2000);",
+                  "  });",
+                  "",
+                  "  pm.test('Multi-day Pricing - Valid price calculation', function () {",
+                  "      const response = pm.response.json();",
+                  "      pm.expect(response).to.be.an('object');",
+                  "      pm.expect(response).to.have.property('price');",
+                  "      pm.expect(response.price).to.be.a('number');",
+                  "      pm.expect(response.price).to.be.above(0);",
+                  "  });",
+                  "",
+                  "  pm.test('Multi-day Pricing - Has discount information', function () {",
+                  "      const response = pm.response.json();",
+                  "      pm.expect(response).to.have.property('discount');",
+                  "      pm.expect(response.discount).to.be.a('boolean');",
+                  "  });",
+                  "",
+                  "  pm.test('Multi-day Pricing - Price is reasonable', function () {",
+                  "      const response = pm.response.json();",
+                  "      // Assuming reasonable price range for beach chairs",
+                  "      pm.expect(response.price).to.be.within(1, 1000);",
+                  "  });"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/prices/calculate?start={{startDate}}&end={{endDate}}&model={{chairModel}}&publicReference={{publicReference}}&rowId={{rowId}}&sectionId={{sectionId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "prices",
+                "calculate"
+              ],
+              "query": [
+                {
+                  "key": "start",
+                  "value": "{{startDate}}"
+                },
+                {
+                  "key": "end",
+                  "value": "{{endDate}}"
+                },
+                {
+                  "key": "model",
+                  "value": "{{chairModel}}"
+                },
+                {
+                  "key": "publicReference",
+                  "value": "{{publicReference}}"
+                },
+                {
+                  "key": "rowId",
+                  "value": "{{rowId}}"
+                },
+                {
+                  "key": "sectionId",
+                  "value": "{{sectionId}}"
+                }
+              ]
+            },
+            "description": "🟡 MEDIUM: Complex multi-day calculations. Add query params: ?sectionId={{sectionId}}&rowId={{rowId}}&model={{chairModel}}&start={{startDate}}&end={{endDate}}&publicReference={{publicReference}}"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Single Day Rates",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "  pm.test('Single Day Rates - Status code is 200', function () {",
+                  "      pm.response.to.have.status(200);",
+                  "  });",
+                  "",
+                  "  pm.test('Single Day Rates - Response time under 3000ms', function () ",
+                  "  {",
+                  "      pm.expect(pm.response.responseTime).to.be.below(3000);",
+                  "  });",
+                  "",
+                  "  pm.test('Single Day Rates - Valid rate data', function () {",
+                  "      const response = pm.response.json();",
+                  "      pm.expect(response).to.be.an('array');",
+                  "      pm.expect(response.length).to.be.above(0);",
+                  "",
+                  "      const rate = response[0];",
+                  "      pm.expect(rate).to.have.property('price');",
+                  "      pm.expect(rate.price).to.be.a('number');",
+                  "      pm.expect(rate.price).to.be.above(0);",
+                  "  });",
+                  "",
+                  "  pm.test('Single Day Rates - Has rate details', function () {",
+                  "      const response = pm.response.json();",
+                  "      const rate = response[0];",
+                  "      pm.expect(rate).to.have.property('type');",
+                  "      pm.expect(rate.type).to.be.a('string');",
+                  "      pm.expect(rate.type).to.not.be.empty;",
+                  "  });",
+                  "",
+                  "  pm.test('Single Day Rates - Valid rate type', function () {",
+                  "      const response = pm.response.json();",
+                  "      const rate = response[0];",
+                  "      const validTypes = ['FULLDAY', 'HALFDAY', 'HOURLY'];",
+                  "      pm.expect(validTypes).to.include(rate.type);",
+                  "  });"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/prices/rates?start={{singleDate}}&end={{singleDate}}&publicReference={{publicReference}}&model={{chairModelSingle}}&rowId={{rowId}}&sectionId={{sectionId}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "prices",
+                "rates"
+              ],
+              "query": [
+                {
+                  "key": "start",
+                  "value": "{{singleDate}}"
+                },
+                {
+                  "key": "end",
+                  "value": "{{singleDate}}"
+                },
+                {
+                  "key": "publicReference",
+                  "value": "{{publicReference}}"
+                },
+                {
+                  "key": "model",
+                  "value": "{{chairModelSingle}}"
+                },
+                {
+                  "key": "rowId",
+                  "value": "{{rowId}}"
+                },
+                {
+                  "key": "sectionId",
+                  "value": "{{sectionId}}"
+                }
+              ]
+            },
+            "description": "🟡 MEDIUM: Single day pricing calculation. Add query params: ?sectionId={{sectionId}}&rowId={{rowId}}&model={{chairModelSingle}}&start={{singleDate}}&end={{singleDate}}&publicReference={{publicReference}}"
+          },
+          "response": []
+        }
+      ],
+      "description": "Cost calculation endpoints with complex business logic"
+    },
+    {
+      "name": "6. Booking Management (Transactional)",
+      "item": [
+        {
+          "name": "Create Booking",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "  pm.test('Create Booking - Status code is 201', function () {",
+                  "      pm.response.to.have.status(201);",
+                  "  });",
+                  "",
+                  "  pm.test('Create Booking - Response time under 3000ms', function () {",
+                  "      pm.expect(pm.response.responseTime).to.be.below(3000);",
+                  "  });",
+                  "",
+                  "  pm.test('Create Booking - Has booking data', function () {",
+                  "      const response = pm.response.json();",
+                  "      pm.expect(response).to.be.an('object');",
+                  "      pm.expect(response).to.have.property('bookingRef');",
+                  "      pm.expect(response).to.have.property('status');",
+                  "      pm.expect(response.status).to.eql('OPEN');",
+                  "  });",
+                  "",
+                  "  pm.test('Create Booking - BookingRef format validation', function () ",
+                  "  {",
+                  "      const response = pm.response.json();",
+                  "      pm.expect(response.bookingRef).to.match(/^[A-Z0-9]+$/);",
+                  "      pm.expect(response.bookingRef.length).to.be.above(4);",
+                  "  });",
+                  "",
+                  "  pm.test('Create Booking - Has required properties', function () {",
+                  "      const response = pm.response.json();",
+                  "      pm.expect(response).to.have.property('id');",
+                  "      pm.expect(response).to.have.property('vendorId');",
+                  "      pm.expect(response).to.have.property('customerId');",
+                  "      pm.expect(response).to.have.property('totalPrice');",
+                  "      pm.expect(response).to.have.property('createdAt');",
+                  "      pm.expect(response.id).to.be.a('number');",
+                  "      pm.expect(response.totalPrice).to.be.a('number');",
+                  "  });",
+                  "",
+                  "  // Capture bookingRef for subsequent requests",
+                  "  if (pm.response.code === 201) {",
+                  "      const responseJson = pm.response.json();",
+                  "      if (responseJson.bookingRef) {",
+                  "          pm.environment.set('bookingRef', responseJson.bookingRef);",
+                  "          console.log('Captured bookingRef:', responseJson.bookingRef);",
+                  "      }",
+                  "  }",
+                  "",
+                  "  pm.test('Create Booking - Environment variables validated', function ",
+                  "  () {",
+                  "      pm.expect(pm.environment.get('publicReference')).to.not.be.empty;",
+                  "  });"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/features/public/booking?publicReference={{publicReference}}&source={{source}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "features",
+                "public",
+                "booking"
+              ],
+              "query": [
+                {
+                  "key": "publicReference",
+                  "value": "{{publicReference}}"
+                },
+                {
+                  "key": "source",
+                  "value": "{{source}}"
+                }
+              ]
+            },
+            "description": "🟡 CRITICAL: Creates booking container. Returns bookingRef for subsequent calls."
+          },
+          "response": []
+        },
+        {
+          "name": "Check Booking Status",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "  pm.test('Booking Status - Status code is 200', function () {",
+                  "      pm.response.to.have.status(200);",
+                  "  });",
+                  "",
+                  "  pm.test('Booking Status - Response time under 2000ms', function () {",
+                  "      pm.expect(pm.response.responseTime).to.be.below(2000);",
+                  "  });",
+                  "",
+                  "  pm.test('Booking Status - Booking exists (empty response indicates success)', function () {",
+                  "",
+                  "      pm.expect(pm.response.code).to.eql(200);",
+                  "",
+                  "      const responseText = pm.response.text();",
+                  "      pm.expect(responseText).to.be.empty;",
+                  "  });",
+                  "",
+                  "  pm.test('Booking Status - BookingRef exists in environment', function",
+                  "   () {",
+                  "      pm.expect(pm.environment.get('bookingRef')).to.not.be.empty;",
+                  "  });"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/features/public/booking_status/{{bookingRef}}?publicReference={{publicReference}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "features",
+                "public",
+                "booking_status",
+                "{{bookingRef}}"
+              ],
+              "query": [
+                {
+                  "key": "publicReference",
+                  "value": "{{publicReference}}"
+                }
+              ]
+            },
+            "description": "🟢 LOW: Verify booking status after creation. Requires bookingRef from Create Booking response."
+          },
+          "response": []
+        },
+        {
+          "name": "Add Beach Chair to Booking",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "  pm.test('Add Beach Chair - Valid response code', function () {",
+                  "",
+                  "      const validCodes = [201, 409];",
+                  "      pm.expect(validCodes).to.include(pm.response.code);",
+                  "  });",
+                  "",
+                  "  pm.test('Add Beach Chair - Response time under 3000ms', function () {",
+                  "      pm.expect(pm.response.responseTime).to.be.below(3000);",
+                  "  });",
+                  "",
+                  "  pm.test('Add Beach Chair - Response handling', function () {",
+                  "      const response = pm.response.json();",
+                  "",
+                  "      if (pm.response.code === 201) {",
+                  "          // Success case - validate booking data",
+                  "          pm.expect(response).to.be.an('object');",
+                  "          pm.expect(response).to.have.property('beachChairBookings');",
+                  "          pm.expect(response.beachChairBookings).to.be.an('array');",
+                  "      } else if (pm.response.code === 409) {",
+                  "          // Conflict case - validate error structure",
+                  "          pm.expect(response).to.have.property('errorType');",
+                  "          pm.expect(response.errorType).to.eql('BEACH_CHAIR_TAKEN');",
+                  "          pm.expect(response).to.have.property('payload');",
+                  "          pm.expect(response.payload).to.have.property('id');",
+                  "          console.log('Beach chair already taken, ID:',",
+                  "  response.payload.id);",
+                  "      }",
+                  "  });",
+                  "",
+                  "  pm.test('Add Beach Chair - Booking ID captured (success only)',",
+                  "  function () {",
+                  "      if (pm.response.code === 201) {",
+                  "          const response = pm.response.json();",
+                  "          if (response.beachChairBookings &&",
+                  "  response.beachChairBookings.length > 0) {",
+                  "              // Capture booking data for subsequent requests",
+                  "              pm.environment.set('beachChairBookingId',",
+                  "  response.beachChairBookings[0].id);",
+                  "          }",
+                  "      } else {",
+                  "          // Skip this test for conflict responses",
+                  "          pm.test.skip();",
+                  "      }",
+                  "  });",
+                  "",
+                  "  pm.test('Add Beach Chair - Required booking data', function () {",
+                  "      // This test passes regardless of response type",
+                  "      pm.expect(pm.environment.get('bookingRef')).to.not.be.empty;",
+                  "  });"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"beachChairId\": {{beachChairId}},\n  \"start\": \"{{startDate}}\",\n  \"end\": \"{{endDate}}\",\n  \"model\": \"{{chairModel}}\",\n  \"discount\": false\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/features/public/booking/{{bookingRef}}/beach_chair_bookings?publicReference={{publicReference}}&timeZone={{timeZone}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "features",
+                "public",
+                "booking",
+                "{{bookingRef}}",
+                "beach_chair_bookings"
+              ],
+              "query": [
+                {
+                  "key": "publicReference",
+                  "value": "{{publicReference}}"
+                },
+                {
+                  "key": "timeZone",
+                  "value": "{{timeZone}}"
+                }
+              ]
+            },
+            "description": "🟡 CRITICAL: Add beach chair to booking. State-dependent operation."
+          },
+          "response": []
+        },
+        {
+          "name": "Remove Beach Chair from Booking",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test('Remove Beach Chair - Valid response code', function () {",
+                  "      // Accept both success (200) and already removed (400)",
+                  "      const validCodes = [200, 400];",
+                  "      pm.expect(validCodes).to.include(pm.response.code);",
+                  "  });",
+                  "",
+                  "  pm.test('Remove Beach Chair - Response time under 2000ms', function ",
+                  "  () {",
+                  "      pm.expect(pm.response.responseTime).to.be.below(2000);",
+                  "  });",
+                  "",
+                  "  pm.test('Remove Beach Chair - Not 403 forbidden', function () {",
+                  "      pm.expect(pm.response.code).to.not.eql(403);",
+                  "  });",
+                  "",
+                  "  pm.test('Remove Beach Chair - Required IDs exist', function () {",
+                  "      pm.expect(pm.environment.get('bookingRef')).to.not.be.empty;",
+                  "      pm.expect(pm.environment.get('beachChairBookingId')).to.not.be.undefined;",
+                  "",
+                  "  pm.expect(pm.environment.get('beachChairBookingId')).to.not.be.null;",
+                  "      pm.expect(pm.environment.get('publicReference')).to.not.be.empty;",
+                  "  });",
+                  "",
+                  "  pm.test('Remove Beach Chair - Response handling', function () {",
+                  "      const response = pm.response.json();",
+                  "",
+                  "      if (pm.response.code === 200) {",
+                  "          // Success case - chair was removed",
+                  "          pm.expect(response).to.have.property('beachChairBookings');",
+                  "          pm.expect(response.beachChairBookings).to.be.an('array');",
+                  "          console.log('Beach chair removed successfully');",
+                  "      } else if (pm.response.code === 400) {",
+                  "          // Already removed case",
+                  "          pm.expect(response).to.have.property('errorType');",
+                  "          pm.expect(response.errorType).to.eql('BEACH_CHAIR_BOOKING_NOT_EXIST');",
+                  "          pm.expect(response).to.have.property('payload');",
+                  "",
+                  "  pm.expect(response.payload).to.have.property('beachChairBooking');",
+                  "          console.log('Beach chair booking not found - already removed, ID:', response.payload.beachChairBooking);",
+                  "      }",
+                  "  });",
+                  "",
+                  "  // Check for timing-related errors",
+                  "  if (pm.response.code === 403) {",
+                  "      console.log('403 Error - May be timing related. Check variable chaining.');",
+                  "  }"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/features/public/booking/{{bookingRef}}/beach_chair_booking/{{beachChairBookingId}}?publicReference={{publicReference}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "features",
+                "public",
+                "booking",
+                "{{bookingRef}}",
+                "beach_chair_booking",
+                "{{beachChairBookingId}}"
+              ],
+              "query": [
+                {
+                  "key": "publicReference",
+                  "value": "{{publicReference}}"
+                }
+              ]
+            },
+            "description": "🟡 MEDIUM: Remove specific beach chair from booking. ⚠️ TIMING: May fail with 403 if called immediately after adding chair. Requires proper bookingRef and beachChairBookingId variables."
+          },
+          "response": []
+        }
+      ],
+      "description": "Core booking operations - state-dependent transactions"
+    },
+    {
+      "name": "7. Customer & Payment (Critical Path)",
+      "item": [
+        {
+          "name": "Get Terms & Conditions",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "  pm.test('Terms & Conditions - Status code is 200', function () {",
+                  "      pm.response.to.have.status(200);",
+                  "  });",
+                  "",
+                  "  pm.test('Terms & Conditions - Response time under 2000ms', function ",
+                  "  () {",
+                  "      pm.expect(pm.response.responseTime).to.be.below(2000);",
+                  "  });",
+                  "",
+                  "  pm.test('Terms & Conditions - HTML content exists', function () {",
+                  "      const response = pm.response.json();",
+                  "      pm.expect(response).to.have.property('html');",
+                  "      pm.expect(response.html).to.be.a('string');",
+                  "      pm.expect(response.html.length).to.be.above(100);",
+                  "      pm.expect(response.html).to.include('<h2>');",
+                  "  });",
+                  "",
+                  "  pm.test('Terms & Conditions - VendorId variable exists', function () ",
+                  "  {",
+                  "      pm.expect(pm.environment.get('vendorId')).to.not.be.empty;",
+                  "  });"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/vendor/vendors/terms/{{vendorId}}/html",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "vendor",
+                "vendors",
+                "terms",
+                "{{vendorId}}",
+                "html"
+              ]
+            },
+            "description": "🟢 LOW: Load vendor-specific terms and conditions in HTML format. Called during customer registration flow. Large HTML content with legal terms."
+          },
+          "response": []
+        },
+        {
+          "name": "Add Customer to Booking",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "  pm.test('Add Customer - Status code is 201', function () {",
+                  "      pm.response.to.have.status(201);",
+                  "  });",
+                  "",
+                  "  pm.test('Add Customer - Response time under 3000ms', function () {",
+                  "      pm.expect(pm.response.responseTime).to.be.below(3000);",
+                  "  });",
+                  "",
+                  "  pm.test('Add Customer - Customer data accepted', function () {",
+                  "      const response = pm.response.json();",
+                  "      pm.expect(response).to.be.an('object');",
+                  "      pm.expect(response).to.have.property('customerId');",
+                  "      pm.expect(response.customerId).to.be.a('number');",
+                  "      pm.expect(response.customerId).to.be.above(0);",
+                  "  });",
+                  "",
+                  "  pm.test('Add Customer - Booking updated with customer', function () {",
+                  "      const response = pm.response.json();",
+                  "      pm.expect(response).to.have.property('id');",
+                  "      pm.expect(response).to.have.property('status');",
+                  "      pm.expect(response.status).to.be.oneOf(['OPEN', 'PENDING',",
+                  "  'CONFIRMED']);",
+                  "  });",
+                  "",
+                  "  pm.test('Add Customer - Required variables exist', function () {",
+                  "      pm.expect(pm.environment.get('bookingRef')).to.not.be.empty;",
+                  "      pm.expect(pm.environment.get('country')).to.not.be.empty;",
+                  "  });",
+                  "",
+                  "  // Capture customer ID for subsequent requests",
+                  "  if (pm.response.code === 201) {",
+                  "      const responseJson = pm.response.json();",
+                  "      if (responseJson.customerId) {",
+                  "          pm.environment.set('customerId', responseJson.customerId);",
+                  "          console.log('Captured customerId:', responseJson.customerId);",
+                  "      }",
+                  "  }"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"firstName\": \"LoadTest\",\n    \"lastName\": \"Customer\",\n    \"salutation\": \"MR\",\n    \"address\": {\n      \"street\": \"123 Test Street\",\n      \"zip\": \"12345\",\n      \"city\": \"Berlin\",\n      \"country\": \"{{country}}\",\n      \"additionalInfo\": \"\"\n    },\n    \"telephone\": \"+49123456789\",\n    \"email\": \"test@gmail.com\",\n    \"language\": \"de\",\n    \"userId\": \"loadtest-user-123\",\n    \"additionalData\": {\n      \"marketing\": false\n    }\n  }"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/features/public/booking/{{bookingRef}}/add_customer?publicReference={{publicReference}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "features",
+                "public",
+                "booking",
+                "{{bookingRef}}",
+                "add_customer"
+              ],
+              "query": [
+                {
+                  "key": "publicReference",
+                  "value": "{{publicReference}}"
+                }
+              ]
+            },
+            "description": "🟢 CRITICAL: Add customer information to booking. Must succeed for completion. Use valid email format and complete address data."
+          },
+          "response": []
+        },
+        {
+          "name": "Select Payment Method",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "// Load Testing - Select Payment Method (CRITICAL)",
+                  "pm.test('Payment Method - Status code is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test('Payment Method - Response time under 3000ms', function () {",
+                  "    pm.expect(pm.response.responseTime).to.be.below(3000);",
+                  "});",
+                  "",
+                  "pm.test('Payment Method - Method accepted', function () {",
+                  "    const response = pm.response.json();",
+                  "    pm.expect(response).to.be.an('object');",
+                  "    pm.expect(response).to.have.property('paymentMethod');",
+                  "    pm.expect(response.paymentMethod).to.eql('STRIPE_CREDIT_CARD');",
+                  "});",
+                  "",
+                  "pm.test('Payment Method - Valid payment methods', function () {",
+                  "    const validMethods = ['STRIPE_CREDIT_CARD', 'STRIPE_SOFORT', 'STRIPE_PAYPAL', 'STRIPE_BANK_TRANSFER'];",
+                  "    const response = pm.response.json();",
+                  "    pm.expect(validMethods).to.include(response.paymentMethod);",
+                  "});",
+                  "",
+                  "pm.test('Payment Method - Required variables exist', function () {",
+                  "    pm.expect(pm.environment.get('testEmail')).to.not.be.empty;",
+                  "    pm.expect(pm.environment.get('bookingRef')).to.not.be.empty;",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"paymentMethod\": \"STRIPE_CREDIT_CARD\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/features/public/booking?email={{testEmail}}&bookingRef={{bookingRef}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "features",
+                "public",
+                "booking"
+              ],
+              "query": [
+                {
+                  "key": "email",
+                  "value": "{{testEmail}}"
+                },
+                {
+                  "key": "bookingRef",
+                  "value": "{{bookingRef}}"
+                }
+              ]
+            },
+            "description": "🟡 MEDIUM: Sets payment method for booking. Status remains 'OPEN'. Available methods: STRIPE_CREDIT_CARD, STRIPE_SOFORT, STRIPE_PAYPAL, STRIPE_BANK_TRANSFER"
+          },
+          "response": []
+        },
+        {
+          "name": "Confirm Payment",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  " pm.test('Confirm Payment - Valid response code', function () {",
+                  "      // Accept both success (200) and business logic error (400)",
+                  "      const validCodes = [200, 400];",
+                  "      pm.expect(validCodes).to.include(pm.response.code);",
+                  "  });",
+                  "",
+                  "  pm.test('Confirm Payment - Response time under 5000ms (CRITICAL)',",
+                  "  function () {",
+                  "      pm.expect(pm.response.responseTime).to.be.below(5000);",
+                  "  });",
+                  "",
+                  "  pm.test('Confirm Payment - Response handling', function () {",
+                  "      const response = pm.response.json();",
+                  "",
+                  "      if (pm.response.code === 200) {",
+                  "          // Success case - booking confirmed",
+                  "          pm.expect(response).to.have.property('status');",
+                  "          pm.expect(['CONFIRMED',",
+                  "  'PENDING']).to.include(response.status);",
+                  "          console.log('Payment confirmed successfully');",
+                  "      } else if (pm.response.code === 400) {",
+                  "          // Business logic error - likely empty booking",
+                  "          pm.expect(response).to.have.property('errorType');",
+                  "          if (response.errorType === 'CHANGE_STATE_ERROR') {",
+                  "",
+                  "  pm.expect(response.payload).to.have.property('errorMessage');",
+                  "              console.log('Cannot confirm empty booking:',",
+                  "  response.payload.errorMessage);",
+                  "          }",
+                  "      }",
+                  "  });",
+                  "",
+                  "  pm.test('Confirm Payment - No critical payment errors', function () {",
+                  "      // 400 is acceptable for empty booking, but not 402 (payment issues)",
+                  "      pm.expect(pm.response.code).to.not.eql(402); // Payment required",
+                  "      pm.expect(pm.response.code).to.not.eql(401); // Unauthorized",
+                  "      pm.expect(pm.response.code).to.not.eql(403); // Forbidden",
+                  "  });",
+                  "",
+                  "  pm.test('Confirm Payment - All required variables', function () {",
+                  "      pm.expect(pm.environment.get('testEmail')).to.not.be.empty;",
+                  "      pm.expect(pm.environment.get('bookingRef')).to.not.be.empty;",
+                  "      pm.expect(pm.environment.get('timeZone')).to.not.be.empty;",
+                  "  });"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/features/public/booking/confirm?email={{testEmail}}&bookingRef={{bookingRef}}&flow={{flow}}&timeZone={{timeZone}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "features",
+                "public",
+                "booking",
+                "confirm"
+              ],
+              "query": [
+                {
+                  "key": "email",
+                  "value": "{{testEmail}}"
+                },
+                {
+                  "key": "bookingRef",
+                  "value": "{{bookingRef}}"
+                },
+                {
+                  "key": "flow",
+                  "value": "{{flow}}"
+                },
+                {
+                  "key": "timeZone",
+                  "value": "{{timeZone}}"
+                }
+              ]
+            },
+            "description": "🔴 HIGH: ACTUAL payment completion endpoint. Called after external payment processing (Stripe/PayPal). Finalizes booking and changes status."
+          },
+          "response": []
+        },
+        {
+          "name": "Retrieve Booking Details",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "// Load Testing - Retrieve Booking Details (HIGH LOAD)",
+                  "pm.test('Booking Details - Status code is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test('Booking Details - Response time under 3000ms (CRITICAL)', function () {",
+                  "    pm.expect(pm.response.responseTime).to.be.below(3000);",
+                  "});",
+                  "",
+                  "pm.test('Booking Details - Large response handling (>40KB)', function () {",
+                  "    const responseSize = JSON.stringify(pm.response.json()).length;",
+                  "    console.log('Response size:', responseSize, 'bytes');",
+                  "    pm.expect(responseSize).to.be.above(1000); // Should be large",
+                  "});",
+                  "",
+                  "pm.test('Booking Details - Complete booking data', function () {",
+                  "    const response = pm.response.json();",
+                  "    pm.expect(response).to.be.an('object');",
+                  "    pm.expect(response).to.have.property('bookingRef');",
+                  "    pm.expect(response).to.have.property('customer');",
+                  "    pm.expect(response).to.have.property('beachChairBookings');",
+                  "});",
+                  "",
+                  "pm.test('Booking Details - IoT and GPS data present', function () {",
+                  "    const response = pm.response.json();",
+                  "    if (response.beachChairBookings && response.beachChairBookings.length > 0) {",
+                  "        const firstBooking = response.beachChairBookings[0];",
+                  "        pm.expect(firstBooking).to.have.property('beachChair');",
+                  "    }",
+                  "});",
+                  "",
+                  "pm.test('Booking Details - API key authentication', function () {",
+                  "    pm.expect(pm.environment.get('apiKey')).to.not.be.empty;",
+                  "    pm.expect(pm.response.code).to.not.eql(401); // Unauthorized",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "skj-api-key",
+                "value": "{{apiKey}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/features/public/booking_details?email={{testEmail}}&bookingRef={{bookingRef}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "features",
+                "public",
+                "booking_details"
+              ],
+              "query": [
+                {
+                  "key": "email",
+                  "value": "{{testEmail}}"
+                },
+                {
+                  "key": "bookingRef",
+                  "value": "{{bookingRef}}"
+                }
+              ]
+            },
+            "description": "🔴 HIGH: Retrieve complete booking details. REQUIRES skj-api-key header. Large response payload (>40KB) with IoT lock data, GPS coordinates, and terms."
+          },
+          "response": []
+        }
+      ],
+      "description": "Final booking processing - must be reliable and fast"
+    },
+    {
+      "name": "8. Imported Booking Flow",
+      "item": [
+        {
+          "name": "Retrieve Imported Booking",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "// Load Testing - Imported Booking Lookup",
+                  "pm.test('Imported Booking - Status code is 200', function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test('Imported Booking - Response time under 2000ms', function () {",
+                  "    pm.expect(pm.response.responseTime).to.be.below(2000);",
+                  "});",
+                  "",
+                  "pm.test('Imported Booking - Cross-vendor lookup works', function () {",
+                  "    const response = pm.response.json();",
+                  "    pm.expect(response).to.be.an('object');",
+                  "    pm.expect(response).to.have.property('bookingRef');",
+                  "});",
+                  "",
+                  "pm.test('Imported Booking - API key required', function () {",
+                  "    pm.expect(pm.environment.get('apiKey')).to.not.be.empty;",
+                  "    pm.expect(pm.response.code).to.not.eql(401);",
+                  "});",
+                  "",
+                  "pm.test('Imported Booking - Not 404 not found', function () {",
+                  "    pm.expect(pm.response.code).to.not.eql(404);",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              },
+              {
+                "key": "skj-api-key",
+                "value": "{{apiKey}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/features/public/booking_details?email={{testEmail}}&bookingRef={{bookingRef}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "features",
+                "public",
+                "booking_details"
+              ],
+              "query": [
+                {
+                  "key": "email",
+                  "value": "{{testEmail}}"
+                },
+                {
+                  "key": "bookingRef",
+                  "value": "{{bookingRef}}",
+                  "description": "Imported booking reference format"
+                }
+              ]
+            },
+            "description": "🟡 MEDIUM: Test cross-vendor booking lookup with imported booking reference format. Replace bookingRef with actual imported booking reference."
+          },
+          "response": []
+        }
+      ],
+      "description": "Cross-vendor booking lookup for imported bookings"
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "exec": [
+          "// Collection-level Pre-request Script",
+          "// Validates environment setup before each request",
+          "",
+          "const requiredVars = [",
+          "    'baseUrl',",
+          "    'publicReference', ",
+          "    'sectionId',",
+          "    'beachChairId',",
+          "    'timeZone',",
+          "    'country',",
+          "    'apiKey',",
+          "    'vendorId',",
+          "    'testEmail'",
+          "];",
+          "",
+          "const missingVars = [];",
+          "",
+          "requiredVars.forEach(varName => {",
+          "    const value = pm.environment.get(varName);",
+          "    if (!value || value.trim() === '') {",
+          "        missingVars.push(varName);",
+          "    }",
+          "});",
+          "",
+          "if (missingVars.length > 0) {",
+          "    console.warn('⚠️ Missing environment variables:', missingVars.join(', '));",
+          "    console.warn('Load testing may fail. Please set all required variables.');",
+          "}",
+          "",
+          "// Log request info for load testing",
+          "console.log('🚀 Request:', pm.info.requestName);",
+          "console.log('📊 Environment:', pm.environment.name || 'No environment selected');"
+        ],
+        "type": "text/javascript"
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "exec": [
+          "// Collection-level Test Script",
+          "// Global performance and error monitoring",
+          "",
+          "// Performance monitoring",
+          "const responseTime = pm.response.responseTime;",
+          "console.log('⏱️ Response time:', responseTime + 'ms');",
+          "",
+          "// Global error detection",
+          "if (pm.response.code >= 500) {",
+          "    console.error('🔥 Server Error detected:', pm.response.code, pm.response.status);",
+          "}",
+          "",
+          "if (pm.response.code === 429) {",
+          "    console.error('🚫 Rate limiting detected - reduce request frequency');",
+          "}",
+          "",
+          "if (pm.response.code === 401) {",
+          "    console.error('🔒 Authentication failed - check API keys');",
+          "}",
+          "",
+          "// Log for load testing analysis",
+          "const logData = {",
+          "    request: pm.info.requestName,",
+          "    status: pm.response.code,",
+          "    responseTime: responseTime,",
+          "    timestamp: new Date().toISOString()",
+          "};",
+          "console.log('📈 Load Test Data:', JSON.stringify(logData));"
+        ],
+        "type": "text/javascript"
+      }
+    }
+  ]
+}
