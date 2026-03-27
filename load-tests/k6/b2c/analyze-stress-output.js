@@ -9,10 +9,14 @@
 // Usage:
 //   node load-tests/k6/b2c/analyze-stress-output.js <path-to-ndjson>
 //
+// If the stress test was run with a custom PEAK_RATE, pass the same value so
+// the analyzer labels the peak stage correctly:
+//   PEAK_RATE=3600 node load-tests/k6/b2c/analyze-stress-output.js <path-to-ndjson>
+//
 // Example:
 //   mkdir -p load-tests/results
-//   k6 run --out json=load-tests/results/stress-20260324.ndjson load-tests/k6/b2c/stress-test.js
-//   node load-tests/k6/b2c/analyze-stress-output.js load-tests/results/stress-20260324.ndjson
+//   k6 run --env PEAK_RATE=3600 --out json=load-tests/results/stress-20260324.ndjson load-tests/k6/b2c/stress-test.js
+//   PEAK_RATE=3600 node load-tests/k6/b2c/analyze-stress-output.js load-tests/results/stress-20260324.ndjson
 
 'use strict';
 
@@ -23,14 +27,19 @@ const rl   = require('readline');
 
 const SLA_MS = 2000;
 
-// Stress test stages — elapsed seconds from test start (matches stress-test.js)
+// Stress test stages — elapsed seconds from test start (matches stress-test.js).
+// Peak stage rate is derived from PEAK_RATE env var to match whatever was passed
+// to k6 when the test was run: node analyze-stress-output.js <file> --peak-rate 3600
+const peakRateMin = parseInt(process.env.PEAK_RATE, 10) || 1800;
+const peakRateSec = Math.max(21, Math.round(peakRateMin / 60));
+
 const STAGES = [
-  { start:   0, end:  120, rate:  2, label: 'warm-up (~12 req/min)'        },
-  { start: 120, end:  300, rate:  5, label: 'low load (~30 req/min)'       },
-  { start: 300, end:  480, rate: 10, label: 'moderate load (~60 req/min)'  },
-  { start: 480, end:  660, rate: 20, label: 'high load (~120 req/min)'     },
-  { start: 660, end:  840, rate: 30, label: 'near-limit (~180 req/min)'    },
-  { start: 840, end: 1020, rate:  0, label: 'recovery'                     },
+  { start:   0, end:  120, rate:  2,           label: 'warm-up (~12 req/s)'                              },
+  { start: 120, end:  300, rate:  5,           label: 'low load (~30 req/s)'                             },
+  { start: 300, end:  480, rate: 10,           label: 'moderate load (~60 req/s)'                        },
+  { start: 480, end:  660, rate: 20,           label: 'high load (~120 req/s)'                           },
+  { start: 660, end:  840, rate: peakRateSec,  label: `near-limit (~${peakRateSec * 6} req/s)`           },
+  { start: 840, end: 1020, rate:  0,           label: 'recovery'                                           },
 ];
 
 const PHASES = [
@@ -171,7 +180,7 @@ reader.on('close', () => {
   });
 
   // ── P(95) approximation per phase ─────────────────────────────────────────
-  console.log('  Approximate percentiles per phase (overall, reservoir sample):');
+  console.log('  Approximate p(95) per phase (overall, reservoir sample):');
   console.log('  ' + '─'.repeat(65));
 
   PHASES.forEach(phase => {

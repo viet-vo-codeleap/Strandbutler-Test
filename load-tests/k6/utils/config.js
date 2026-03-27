@@ -3,14 +3,23 @@
 // Override any value via env var: k6 run -e BASE_URL=http://... script.js
 
 // --- ECS health-check tests (smoke, stress, load, spike on /health) ---
-export const BASE_URL = __ENV.BASE_URL || 'http://strandbutler-test-alb-838959981.eu-west-2.elb.amazonaws.com';
-// export const BASE_URL = __ENV.BASE_URL || 'https://api.skj-test.click';
+export const BASE_URL = __ENV.BASE_URL || 'https://api.skj-test.click';
 
 // --- B2C real API tests ---
-export const B2C_BASE_URL = __ENV.B2C_BASE_URL || 'http://strandbutler-test-alb-838959981.eu-west-2.elb.amazonaws.com';
-// export const B2C_BASE_URL = __ENV.B2C_BASE_URL || 'https://api.skj-test.click';
+export const B2C_BASE_URL = __ENV.B2C_BASE_URL || 'https://api.skj-test.click';
 
 // Fixture values from the Postman environment (test environment)
+//
+// Dates are computed dynamically so the suite stays valid without edits:
+//   startDate  = today + 90 days  (far enough ahead to have open availability)
+//   endDate    = today + 93 days  (3-night multi-day booking)
+//   singleDate = today + 90 days  (same day check-in/out for single-day pricing)
+// Override via env vars if the test dataset requires specific dates:
+//   k6 run --env START_DATE=2026-08-01 --env END_DATE=2026-08-04 ...
+function isoDate(offsetDays) {
+  return new Date(Date.now() + offsetDays * 86400000).toISOString().slice(0, 10);
+}
+
 export const B2C = {
   publicReference: '9317a032-bf53-4bcf-8df0-9a668ddcee6a',
   sectionId:       '338',
@@ -18,9 +27,9 @@ export const B2C = {
   vendorId:        '140',
   rowId:           '453',
   timeZone:        'Europe/Berlin',
-  startDate:       '2025-12-22',
-  endDate:         '2025-12-25',
-  singleDate:      '2025-12-22',
+  startDate:       __ENV.START_DATE  || isoDate(90),
+  endDate:         __ENV.END_DATE    || isoDate(93),
+  singleDate:      __ENV.SINGLE_DATE || isoDate(90),
   chairModel:      'XXL_BEACH_CHAIR',
   chairModelSingle: 'XL_BEACH_CHAIR',
   source:          'CUSTOMER_APP',
