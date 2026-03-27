@@ -32,6 +32,12 @@ import http from 'k6/http';
 import { check, group, sleep } from 'k6';
 import { B2C_BASE_URL, B2C } from '../utils/config.js';
 
+// SUSTAIN_RATE: sustained target in iter/min. Default 1000 = 10k users in 10 min.
+// Converted to iter/sec (timeUnit:'1s'). Minimum 1 to prevent zero.
+// Override at run time: k6 run --env SUSTAIN_RATE=600 case4-sustained-load.js
+const sustainRateMin = parseInt(__ENV.SUSTAIN_RATE, 10) || 1000;
+const sustainRateSec = Math.max(1, Math.round(sustainRateMin / 60));
+
 export const options = {
   scenarios: {
     case4_sustained_load: {
@@ -39,11 +45,11 @@ export const options = {
       startRate:         2,
       timeUnit:          '1s',
       preAllocatedVUs:   100,
-      maxVUs:            500,
+      maxVUs:            Math.max(500, sustainRateSec * 10),
       stages: [
-        { target: 16, duration: '2m' },   // ramp to ~1000 iter/min (~100 RPS)
-        { target: 16, duration: '10m' },  // hold — long enough for ECS to scale out and stabilise
-        { target: 0,  duration: '3m' },   // ramp down — observe ALB drain
+        { target: sustainRateSec, duration: '2m' },   // ramp to target
+        { target: sustainRateSec, duration: '10m' },  // hold — long enough for ECS to scale out and stabilise
+        { target: 0,              duration: '3m' },   // ramp down — observe ALB drain
       ],
     },
   },

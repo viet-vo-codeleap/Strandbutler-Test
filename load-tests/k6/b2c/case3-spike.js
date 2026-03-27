@@ -25,8 +25,14 @@
 //   p95 < 5000ms overall, system recovers within 10 minutes of burst
 
 import http from 'k6/http';
-import { check, group, sleep } from 'k6';
+import { check, group } from 'k6';
 import { B2C_BASE_URL, B2C } from '../utils/config.js';
+
+// BURST_RATE: burst target in iter/min. Default 1000 = 1000 users/min.
+// Converted to iter/sec (timeUnit:'1s'). Minimum 6 to exceed warm-up stage.
+// Override at run time: k6 run --env BURST_RATE=600 case3-spike.js
+const burstRateMin = parseInt(__ENV.BURST_RATE, 10) || 1000;
+const burstRateSec = Math.max(6, Math.round(burstRateMin / 60));
 
 export const options = {
   scenarios: {
@@ -35,12 +41,12 @@ export const options = {
       startRate:         5,
       timeUnit:          '1s',
       preAllocatedVUs:   100,
-      maxVUs:            500,
+      maxVUs:            Math.max(500, burstRateSec * 10),
       stages: [
-        { target: 5,  duration: '1m' },   // warm up at baseline (~30 req/min)
-        { target: 16, duration: '5s' },   // burst to ~1000 iter/min in 5 seconds
-        { target: 16, duration: '3m' },   // sustain burst — observe ECS reaction
-        { target: 2,  duration: '2m' },   // ramp down — observe recovery
+        { target: 5,            duration: '1m' },   // warm up at baseline (~30 req/min)
+        { target: burstRateSec, duration: '5s' },   // burst to target in 5 seconds
+        { target: burstRateSec, duration: '3m' },   // sustain burst — observe ECS reaction
+        { target: 2,            duration: '2m' },   // ramp down — observe recovery
       ],
     },
   },
