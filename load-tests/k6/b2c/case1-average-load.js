@@ -23,18 +23,22 @@ import http from 'k6/http';
 import { check, group, sleep } from 'k6';
 import { B2C_BASE_URL, B2C, B2C_THRESHOLDS } from '../utils/config.js';
 
+// TARGET_RATE: iter/min for the hold stage. Default 28 = 10k users over 6 hours.
+// Override at run time: k6 run --env TARGET_RATE=50 case1-average-load.js
+const TARGET_RATE = parseInt(__ENV.TARGET_RATE, 10) || 28;
+
 export const options = {
   scenarios: {
     case1_average_load: {
       executor:          'ramping-arrival-rate',
       startRate:         1,
-      timeUnit:          '1m',           // 1 iteration per minute at start
+      timeUnit:          '1m',
       preAllocatedVUs:   10,
-      maxVUs:            30,
+      maxVUs:            Math.max(30, TARGET_RATE * 2),
       stages: [
-        { target: 28, duration: '2m' },  // ramp to 28 iter/min (~140 req/min)
-        { target: 28, duration: '6m' },  // hold — flat average day load
-        { target: 0,  duration: '2m' },  // ramp down
+        { target: TARGET_RATE, duration: '2m' },  // ramp to target
+        { target: TARGET_RATE, duration: '6m' },  // hold
+        { target: 0,           duration: '2m' },  // ramp down
       ],
     },
   },
